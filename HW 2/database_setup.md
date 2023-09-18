@@ -1,4 +1,4 @@
-### Database Setup
+# Database Setup
 
 The sequence of steps/commands required to set up a functioning database that is accessible from the public internet.
 
@@ -7,9 +7,9 @@ The sequence of steps/commands required to set up a functioning database that is
 - You have an EC2 instance running on AWS.
 - You are able to SSH into your EC2 instance.
 
-## Steps: 
+# Steps: 
 
-# SSH into your EC2 instance: 
+### SSH into your EC2 instance: 
 
   `ssh -i 'yourKey.pem' ubuntu@X.Y.Z.W`
 
@@ -17,15 +17,15 @@ The sequence of steps/commands required to set up a functioning database that is
 
   > `X.Y.Z.W` is the public IP address of your EC2
 
-# Update package list: 
+### Update package list: 
 
   `sudo apt-get udpate`
 
-# Install MariaDB Server:
+### Install MariaDB Server:
 
   `sudo apt-get install mariadb-server`
 
-# Configure MariaDB to Listen on Port 6002
+### Configure MariaDB to Listen on Port 6002
 
   - Open the `50-server.cnf file`:
 
@@ -39,29 +39,29 @@ The sequence of steps/commands required to set up a functioning database that is
 
     `bind-address = 0.0.0.0`
 
-# Update Security Group Rules in AWS to Allow Traffic on Port 6002
+### Update Security Group Rules in AWS to Allow Traffic on Port 6002
 
   Add a new rule:
 
   Type: `Custom TCP`, Protocol: `TCP`, Port Range: `6002`, Source: `Anwyhere IPv4`
 
-# Open the Maria DB:
+### Open the Maria DB:
 
   `sudo mysql -u root`
 
-# Create an empty database:
+### Create an empty database:
 
   `CREATE DATABASE comp370_test;`
 
-# Create user with password protection:
+### Create user with password protection:
 
   `CREATE USER 'comp370'@'%' IDENTIFIED BY '$ungl@ss3s';`
 
-# Grant the user permission to access the COMP 370 server: 
+### Grant the user permission to access the COMP 370 server: 
 
   `GRANT ALL PRIVILEGES ON comp370_test.* TO 'comp370'@'%';`
 
-# Restart MariaDB to apply the changes
+### Restart MariaDB to apply the changes
 
   `sudo systemctl restart mariadb`
 
